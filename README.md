@@ -1,4 +1,4 @@
-"main.do" creates the estimates (using dcmpsim.ado). "making data files.do" creates a data files including all estimates. The file region.dta contains the regions used and are linked to the data using iso3.
+"main.do" cleans the data and creates the estimates (using dcmpsim.ado). "making data files.do" creates a data files including all estimates. The file region.dta contains the regions used and are linked to the data using iso3.
 
 Data sources needed:
 
