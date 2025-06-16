@@ -5,7 +5,7 @@ cd "$dir"
 // Documentation on the GHE data
 *http://cdn.who.int/media/docs/default-source/gho-documents/global-health-estimates/ghe2021_cod_methods.pdf?sfvrsn=dca346b7_1
 
-// The WHO GHE data is available on request from @WHO (variable names may differ): The file usd here is GHE2021_CoD.dta
+// The WHO GHE data is available on request from @WHO (variable names may differ): The file used here is GHE2021_CoD.dta
 // at the bottom of this page are excel sheets: https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/ghe-leading-causes-of-death
 
 ***********************************************************************************
@@ -123,7 +123,7 @@ keep if inlist(year , 2000,2010,2019,2021) & iso3!=""
 keep year age n iso3 sex mx qx px lx dx Lx Sx Tx ex ax
 merge 1:1 iso3 year age sex using temp, nogen
 merge m:1 iso3 using geoids , nogen keep(match) keepusing(geoid regionid) // only include countries that are also in the WHO GHE
-gen D=unpop*qx // deaths (D) and unpop are used for weighting the aggregates (need to do this before cutting the talbe at 85+)
+gen D=unpop*qx // deaths (D) and unpop are used for weighting the aggregates (need to do this before cutting the table at 85+)
 drop qx px lx Sx Tx
 
 // cut the life table at 85+ instead of 100+ to match the UN GHE
