@@ -1,3 +1,5 @@
+See paper: https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2834368
+
 "main.do" cleans the data and creates the estimates (using dcmpsim.ado). A table can be created using "making data file.do". The file regions.dta contains the regions used and are linked to the data using iso3.
 
 Data sources needed:
