@@ -1,5 +1,5 @@
-global dir "C:\Users\\Karls\\OneDrive\Everything\Work in progress\CIH\deomposition paper\"
-global data "C:\Users\\Karls\\OneDrive\Everything\Work in progress\CIH\data\"  
+global dir "..." // change ... to a working dir
+global data "..." // change ... to a dir where raw data files arestored  
 cd "$dir"
 
 // Documentation on the GHE data
