@@ -2,11 +2,23 @@ global dir "..." // change ... to a working dir
 global data "..." // change ... to a dir where raw data files arestored  
 cd "$dir"
 
-// Documentation on the GHE data
-*http://cdn.who.int/media/docs/default-source/gho-documents/global-health-estimates/ghe2021_cod_methods.pdf?sfvrsn=dca346b7_1
+***********************************************************************************
+***********************************************************************************
+*** Data Files needed
+***********************************************************************************
+***********************************************************************************
 
-// The WHO GHE data is available on request from @WHO (variable names may differ): The file used here is GHE2021_CoD.dta
-// at the bottom of this page are excel sheets: https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/ghe-leading-causes-of-death
+// WHO GHE (number of deaths by cause, age and sex)
+* The WHO GHE data is available on request from @WHO (variable names may differ): The file used here is GHE2021_CoD.dta
+* Documentation on the GHE data: http://cdn.who.int/media/docs/default-source/gho-documents/global-health-estimates/ghe2021_cod_methods.pdf?sfvrsn=dca346b7_1
+* At the bottom of this page are excel sheets with info: https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/ghe-leading-causes-of-death
+
+// UN data files (population size and life tables)
+*https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_PopulationBySingleAgeSex_Medium_1950-2023.csv.gz
+*https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Life_Table_Abridged_Medium_1950-2023.csv.gz
+
+// A file which links iso3 country codes to CIH geographic regions
+* Available in the github repository: https://github.com/O-Karlsson/Priority-health-conditions-and-global-life-expectancy-disparities/blob/062121ea16830d8630205285f9a3cf14dacc5903/regions.dta
 
 ***********************************************************************************
 ***********************************************************************************
@@ -41,7 +53,6 @@ replace level2parent = level2parent[_n-1] if level2parent == . & level>2
 
 compress
 save cause_codes_ghe , replace /* This files is used as a key of causes of death */			
-
 
 
 ***********************************************************************************
