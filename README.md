@@ -1,6 +1,6 @@
 See paper: https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2834368
 
-"main.do" cleans the data and creates the estimates (using dcmpsim.ado). The file regions.dta contains the regions used and are linked to the data using iso3.
+"main.do" cleans the data and creates the estimates (using dcmpsim.ado). The file regions.dta contains the geographic regions used and are linked to the data using iso3.
 
 Data sources needed:
 
