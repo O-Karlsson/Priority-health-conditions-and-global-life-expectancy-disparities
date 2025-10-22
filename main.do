@@ -248,7 +248,7 @@ save UNdata , replace
 
 ***********************************************************************************
 ***********************************************************************************
-*** Peparing ghe WHO GHE
+*** Peparing the WHO GHE
 ***********************************************************************************
 ***********************************************************************************
 
@@ -262,9 +262,9 @@ fillin geoid sex year age ghecause // only maternal deaths no need to adjust lev
 replace dths=0 if dths<0 | dths==. // ???
 replace dths_up=0 if dths_up<0 | dths_up==.
 
-// calculating the standard errors (may want to update this to a diffrent distubution)
+// calculating the standard errors (may want to update this to a diffrent distribution)
 gen se = (ln(dths_up)-ln(dths))/1.96 if dths!=0 // upper bound is sometimes non zero while the lower one is
-replace se = 0 if dths== 0
+replace se = 0 if dths== 0 // this is noted in the text!
 
 merge m:1 geoid using geoids, nogen keep(match) keepusing(geoid exQuantile regionid)
 
@@ -477,3 +477,4 @@ order iso3 country causename
 sort nr
 keep country causename e*
 export delimited using "JAMA OPEN Revision\\Supplement_2" ,replace
+
