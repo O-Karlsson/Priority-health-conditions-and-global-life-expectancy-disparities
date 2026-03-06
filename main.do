@@ -14,6 +14,7 @@ cd "$dir"
 * At the bottom of this page are excel sheets with info: https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/ghe-leading-causes-of-death
 
 // UN data files (population size and life tables)
+* Instead of population consider getting 'Population Exposure' from UN WPP
 *https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_PopulationBySingleAgeSex_Medium_1950-2023.csv.gz
 *https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Life_Table_Abridged_Medium_1950-2023.csv.gz
 
@@ -113,7 +114,7 @@ save geoids, replace
 // data from https://population.un.org/wpp/downloads?folder=Standard%20Projections&group=CSV%20format
 
 *https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_PopulationBySingleAgeSex_Medium_1950-2023.csv.gz
-// population numbers are just used for weighting the aggregate life tables
+// population numbers are just used for weighting the aggregate life tables (consider getting 'population exposure' instead!)
 import delimited using "$data\\WPP 2024\\WPP2024_PopulationBySingleAgeSex_Medium_1950-2023.csv", clear encoding("utf-8")  case(preserve)
 rename  (Time ISO3_code PopMale PopFemale PopTotal)(year iso3 unpop1 unpop2 unpop3)
 keep if inlist(year, 2000,2010,2019,2021)  & iso3!=""
@@ -134,6 +135,9 @@ keep if inlist(year , 2000,2010,2019,2021) & iso3!=""
 keep year age n iso3 sex mx qx px lx dx Lx Sx Tx ex ax
 merge 1:1 iso3 year age sex using temp, nogen
 merge m:1 iso3 using geoids , nogen keep(match) keepusing(geoid regionid) // only include countries that are also in the WHO GHE
+
+
+// NOTE! it would be better get deaths by multiplying mx with 'population exposure'. The results are however very similar doing this. At least use mx instead of qx
 gen D=unpop*qx // deaths (D) and unpop are used for weighting the aggregates (need to do this before cutting the table at 85+)
 drop qx px lx Sx Tx
 
@@ -148,6 +152,7 @@ restore
 drop if age >=85
 append using temp
 
+// use 'population exposure' rather than population
 gen double Lxp = ((unpop-D)*n)+(D*ax)
 replace Lxp = D*ax if age==85
 save temp, replace
@@ -155,6 +160,11 @@ save temp, replace
 ***********************************************************************************
 *** aggregate UN data across regions
 ***********************************************************************************
+
+
+// A better way to aggregate is is to weight mx by 'population exposure' and weight ax by 'population exposure'*mx and then recalculate the rest using that
+// This will give very similar results but using the other way the aggregate will be identical to aggregations by UN WPP
+
 
 replace geoid = regionid
 drop if regionid==.
@@ -477,4 +487,5 @@ order iso3 country causename
 sort nr
 keep country causename e*
 export delimited using "JAMA OPEN Revision\\Supplement_2" ,replace
+
 
