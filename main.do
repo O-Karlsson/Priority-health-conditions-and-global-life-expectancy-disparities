@@ -14,7 +14,7 @@ cd "$dir"
 * At the bottom of this page are excel sheets with info: https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/ghe-leading-causes-of-death
 
 // UN data files (population size and life tables)
-* Instead of population consider getting 'Population Exposure' from UN WPP
+* NOTE! Instead of population consider getting 'Population Exposure' from UN WPP
 *https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_PopulationBySingleAgeSex_Medium_1950-2023.csv.gz
 *https://population.un.org/wpp/assets/Excel%20Files/1_Indicator%20(Standard)/CSV_FILES/WPP2024_Life_Table_Abridged_Medium_1950-2023.csv.gz
 
@@ -137,7 +137,7 @@ merge 1:1 iso3 year age sex using temp, nogen
 merge m:1 iso3 using geoids , nogen keep(match) keepusing(geoid regionid) // only include countries that are also in the WHO GHE
 
 
-// NOTE! it would be better get deaths by multiplying mx with 'population exposure'. The results are however very similar doing this. At least use mx instead of qx
+// NOTE! it would be better get deaths by multiplying mx with 'population exposure'. At least use mx instead of qx. The results are however very similar doing this.
 gen D=unpop*qx // deaths (D) and unpop are used for weighting the aggregates (need to do this before cutting the table at 85+)
 drop qx px lx Sx Tx
 
@@ -487,5 +487,6 @@ order iso3 country causename
 sort nr
 keep country causename e*
 export delimited using "JAMA OPEN Revision\\Supplement_2" ,replace
+
 
 
